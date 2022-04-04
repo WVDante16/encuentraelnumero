@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './Game.css';
 
+let numberList = [];
+
 class Game extends Component {
     constructor() {
         super()
@@ -39,7 +41,10 @@ class Game extends Component {
         const number = parseInt(this.state.number);
         const random = parseInt(this.state.random);
         const text = calculateText(number, random);
+        numberList.push(number);
         console.log(random);
+        console.log(numberList);
+        console.log(numberList.length);
 
         /* Determina que si el número es diferente de random devuelve
         number a su estado inicial 
@@ -76,6 +81,8 @@ class Game extends Component {
 
 export default Game;
 
+let intentos = numberList.length;
+
 function generateRandomNumber(max, min=1) {
     return Math.floor(Math.random()*(max - min) + min);
 }
@@ -85,7 +92,12 @@ function calculateText(number, random) {
     const diff = Math.abs(random - number);
     
     if (number === random) {
-        return "CALIENTE, ESTAS EN LLAMAS! lo has adivinado!";
+        return (
+            <div>
+                <p>Caliente! Estas en llamas! Lo adivinaste!</p>
+                <p>Numero de intentos: {numberList.length + 1}</p>
+            </div>
+        );
     }
     
     if (diff < soClose) {
